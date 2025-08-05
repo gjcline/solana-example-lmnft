@@ -9,12 +9,12 @@ const MintSection = ({ artist }) => {
 
   useEffect(() => {
     // Set window variables for LaunchMyNFT
-    window.ownerId = "4WzpcDfBfY8sCvQdSoptmucfQ1uv1QndoP6zgaq3qZTb";
-    window.collectionId = "MjJrQvTkvpHxfI8aqgCf";
+    window.ownerId = "831vWkdzsj8zg9eK3k1rcNrQXfvdMr3LLvFNYaWyDfrP";
+    window.collectionId = "Xm7NA2NSD4b3eIaxWzbK";
     
     // Load LaunchMyNFT script
     const script = document.createElement('script');
-    script.src = 'https://storage.googleapis.com/scriptslmt/0.1.3/solana.js';
+    script.src = 'https://storage.googleapis.com/scriptslmt/0.1.4/solana.js';
     script.type = 'module';
     script.defer = true;
     document.head.appendChild(script);
@@ -22,7 +22,7 @@ const MintSection = ({ artist }) => {
     // Load CSS
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'https://storage.googleapis.com/scriptslmt/0.1.3/solana.css';
+    link.href = 'https://storage.googleapis.com/scriptslmt/0.1.4/solana.css';
     document.head.appendChild(link);
 
     // Listen for mint success events from LaunchMyNFT
