@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 
-const PaymentOptions = () => {
+const PaymentOptions = ({ artist }) => {
   const [activeTab, setActiveTab] = useState('crypto');
 
   return (
     <section className="payment-section">
       <div className="container">
-        <h2 className="section-title">💳 PAYMENT OPTIONS</h2>
+        <h2 className="section-title" style={{ background: `linear-gradient(45deg, ${artist.color}, #ffaa00)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          💳 {artist.name} PAYMENT OPTIONS
+        </h2>
         
         <div className="payment-tabs">
           <button 
             className={`tab-button ${activeTab === 'crypto' ? 'active' : ''}`}
+            style={activeTab === 'crypto' ? { background: `linear-gradient(135deg, ${artist.color}, #ffaa00)` } : {}}
             onClick={() => setActiveTab('crypto')}
           >
             💎 Pay with Crypto
           </button>
           <button 
             className={`tab-button ${activeTab === 'card' ? 'active' : ''}`}
+            style={activeTab === 'card' ? { background: `linear-gradient(135deg, ${artist.color}, #ffaa00)` } : {}}
             onClick={() => setActiveTab('card')}
           >
             💳 Pay with Card
@@ -27,7 +31,7 @@ const PaymentOptions = () => {
           {activeTab === 'crypto' && (
             <div className="crypto-tab">
               <h3>🚀 Fastest Way to Mint</h3>
-              <p>Already have SOL? Connect your wallet and mint instantly!</p>
+              <p>Already have SOL? Connect your wallet and mint {artist.name} tickets instantly!</p>
               <div className="crypto-features">
                 <div className="feature">
                   <i className="fas fa-bolt"></i>
@@ -39,7 +43,7 @@ const PaymentOptions = () => {
                 </div>
                 <div className="feature">
                   <i className="fas fa-coins"></i>
-                  <span>Lower fees</span>
+                  <span>Support {artist.name} directly</span>
                 </div>
               </div>
             </div>
@@ -48,7 +52,7 @@ const PaymentOptions = () => {
           {activeTab === 'card' && (
             <div className="card-tab">
               <h3>💳 Don't Have SOL? No Problem!</h3>
-              <p>Buy SOL instantly with your credit card and mint tickets</p>
+              <p>Buy SOL instantly with your credit card and mint {artist.name} tickets</p>
               
               <div className="credit-card-steps">
                 <div className="step">
@@ -68,15 +72,15 @@ const PaymentOptions = () => {
                 <div className="step">
                   <div className="step-number">3</div>
                   <div className="step-content">
-                    <h4>Mint Your Tickets</h4>
-                    <p>Use your SOL to mint tickets above</p>
+                    <h4>Mint {artist.name} Tickets</h4>
+                    <p>Use your SOL to mint exclusive {artist.name} tickets above</p>
                   </div>
                 </div>
               </div>
 
               <div className="moonpay-container">
                 <iframe
-                  src="https://buy.moonpay.com?apiKey=pk_live_xNzApwAcky9uMQx6xcXjxe9hwlYMmQ&currencyCode=sol&baseCurrencyAmount=50&baseCurrencyCode=usd&colorCode=%23ff4444&showWalletAddressForm=true"
+                  src={`https://buy.moonpay.com?apiKey=pk_live_xNzApwAcky9uMQx6xcXjxe9hwlYMmQ&currencyCode=sol&baseCurrencyAmount=50&baseCurrencyCode=usd&colorCode=${encodeURIComponent(artist.color)}&showWalletAddressForm=true`}
                   width="100%"
                   height="600"
                   frameBorder="0"
@@ -87,7 +91,7 @@ const PaymentOptions = () => {
 
               <div className="tooltip-info">
                 <i className="fas fa-info-circle"></i>
-                <span>This process takes 2-5 minutes and allows you to participate even without existing crypto.</span>
+                <span>This process takes 2-5 minutes and allows {artist.name} fans to participate even without existing crypto.</span>
               </div>
             </div>
           )}

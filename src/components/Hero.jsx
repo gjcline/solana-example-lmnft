@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Hero = () => {
+const Hero = ({ artist }) => {
   const [timeLeft, setTimeLeft] = useState({
     days: 30,
     hours: 12,
@@ -35,13 +35,20 @@ const Hero = () => {
   return (
     <section className="hero">
       <div className="container">
-        <h1>THE ELIMINATION GAME</h1>
-        <p>Enter the ultimate rapper survival competition. 45,000 tickets will be sold, but only 10 winners will claim the legendary watches worth $50K each.</p>
+        <h1 style={{ background: `linear-gradient(45deg, ${artist.color}, #ffaa00)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          {artist.name} x CHOPPED
+        </h1>
+        <p className="artist-description">{artist.description}</p>
+        <p>Join {artist.name} in the ultimate survival competition. {artist.allocation.toLocaleString()} exclusive tickets for {artist.name} fans, part of 45,000 total tickets. Only 10 winners will claim the legendary watches worth $50K each.</p>
         
         <div className="game-stats">
           <div className="stat">
+            <span className="stat-number" style={{ color: artist.color }}>{artist.allocation.toLocaleString()}</span>
+            <span className="stat-label">{artist.name} Allocation</span>
+          </div>
+          <div className="stat">
             <span className="stat-number">45,000</span>
-            <span className="stat-label">Total Tickets</span>
+            <span className="stat-label">Total Collection</span>
           </div>
           <div className="stat">
             <span className="stat-number">10</span>
@@ -51,6 +58,16 @@ const Hero = () => {
             <span className="stat-number">$500K</span>
             <span className="stat-label">Prize Pool</span>
           </div>
+        </div>
+
+        {/* Artist Social Proof */}
+        <div className="artist-social-proof">
+          <p style={{ color: artist.color, fontSize: '1.2rem', fontWeight: '700', marginBottom: '10px' }}>
+            🔥 {artist.name} fans already minted: {artist.fansMinted.toLocaleString()}
+          </p>
+          <p style={{ color: '#ccc', fontSize: '1rem' }}>
+            Join {artist.name}'s community in the elimination game
+          </p>
         </div>
 
         <div className="countdown pulse">

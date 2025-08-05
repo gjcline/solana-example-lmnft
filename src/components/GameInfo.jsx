@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GameInfo = () => {
+const GameInfo = ({ artist }) => {
   const eliminationRounds = [
     { round: 1, from: 45000, to: 25000, eliminated: 20000 },
     { round: 2, from: 25000, to: 15000, eliminated: 10000 },
@@ -19,15 +19,28 @@ const GameInfo = () => {
   return (
     <section className="game-info">
       <div className="container">
-        <h2 className="section-title">🎮 THE ELIMINATION GAME</h2>
+        <h2 className="section-title" style={{ background: `linear-gradient(45deg, ${artist.color}, #ffaa00)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          🎮 {artist.name} x CHOPPED GAME
+        </h2>
+        
+        <div className="artist-game-intro">
+          <p style={{ fontSize: '1.2rem', color: '#ccc', textAlign: 'center', marginBottom: '40px' }}>
+            {artist.name} fans get exclusive access to {artist.allocation.toLocaleString()} tickets in the ultimate survival competition
+          </p>
+        </div>
         
         <div className="game-overview">
           <div className="overview-card">
-            <h3>📊 Game Overview</h3>
+            <h3 style={{ color: artist.color }}>📊 {artist.name} Game Overview</h3>
             <div className="game-flow">
               <div className="flow-item">
+                <span className="flow-number" style={{ color: artist.color }}>{artist.allocation.toLocaleString()}</span>
+                <span className="flow-label">{artist.name} Tickets</span>
+              </div>
+              <div className="flow-arrow">→</div>
+              <div className="flow-item">
                 <span className="flow-number">45,000</span>
-                <span className="flow-label">Starting Tickets</span>
+                <span className="flow-label">Total Collection</span>
               </div>
               <div className="flow-arrow">→</div>
               <div className="flow-item">
@@ -43,7 +56,7 @@ const GameInfo = () => {
           </div>
 
           <div className="overview-card">
-            <h3>🏆 Prize Pool</h3>
+            <h3 style={{ color: artist.color }}>🏆 Prize Pool</h3>
             <div className="prize-breakdown">
               <div className="prize-item">
                 <span className="prize-count">10x</span>
@@ -51,14 +64,17 @@ const GameInfo = () => {
               </div>
               <div className="total-prize">
                 <span className="total-amount">$500,000</span>
-                <span className="total-label">Total Prize Pool</span>
+                <span className="total-label">Total Prize Pool ({artist.name} fans eligible)</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className="elimination-breakdown">
-          <h3>⚔️ Elimination Rounds Breakdown</h3>
+          <h3 style={{ color: artist.color }}>⚔️ Elimination Rounds Breakdown</h3>
+          <p style={{ textAlign: 'center', color: '#ccc', marginBottom: '30px' }}>
+            {artist.name} fans compete alongside all CHOPPED participants
+          </p>
           <div className="rounds-grid">
             {eliminationRounds.map((round) => (
               <div key={round.round} className="round-card">
@@ -81,7 +97,10 @@ const GameInfo = () => {
         </div>
 
         <div className="prize-showcase">
-          <h3>💎 Prize Showcase</h3>
+          <h3 style={{ color: artist.color }}>💎 {artist.name} Prize Showcase</h3>
+          <p style={{ textAlign: 'center', color: '#ccc', fontSize: '1.1rem', marginBottom: '30px' }}>
+            {artist.name} fans compete for these luxury timepieces
+          </p>
           <div className="prizes-grid">
             <div className="prize-card">
               <div className="prize-image">⌚</div>
