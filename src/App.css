@@ -7,14 +7,15 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a0303 30%, #330808 70%, #0a0a0a 100%);
   color: white;
   overflow-x: hidden;
   position: relative;
   line-height: 1.6;
+  min-height: 100vh;
 }
 
-/* Animated Background */
+/* Enhanced Animated Background with Fire Particles */
 .bg-particles {
   position: fixed;
   top: 0;
@@ -22,21 +23,98 @@ body {
   width: 100%;
   height: 100%;
   z-index: -1;
-  opacity: 0.1;
+  opacity: 0.15;
+  pointer-events: none;
 }
 
-.bg-particles::before {
+.bg-particles::before,
+.bg-particles::after {
   content: '';
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="1" fill="%23ff4444"><animate attributeName="r" values="1;2;1" dur="3s" repeatCount="indefinite"/></circle><circle cx="75" cy="75" r="1" fill="%23ffaa00"><animate attributeName="r" values="1;2;1" dur="4s" repeatCount="indefinite"/></circle><circle cx="50" cy="10" r="1" fill="%23ff4444"><animate attributeName="r" values="1;2;1" dur="5s" repeatCount="indefinite"/></circle></svg>') repeat;
-  animation: float 20s linear infinite;
+  background: 
+    radial-gradient(2px 2px at 20px 30px, #ff4444, transparent),
+    radial-gradient(2px 2px at 40px 70px, #ff6600, transparent),
+    radial-gradient(1px 1px at 90px 40px, #ffaa00, transparent),
+    radial-gradient(1px 2px at 130px 80px, #ff4444, transparent),
+    radial-gradient(2px 1px at 160px 30px, #ff8800, transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: floatingEmbers 15s linear infinite;
+}
+
+.bg-particles::after {
+  background: 
+    radial-gradient(1px 1px at 50px 50px, #ff4444, transparent),
+    radial-gradient(2px 1px at 80px 20px, #ff6600, transparent),
+    radial-gradient(1px 1px at 120px 60px, #ffaa00, transparent);
+  background-size: 180px 120px;
+  animation: floatingEmbers 20s linear infinite reverse;
+}
+
+@keyframes floatingEmbers {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+}
+
+/* Fire Glow Animation */
+@keyframes fireGlow {
+  0% { box-shadow: 0 0 20px #ff4444; }
+  50% { box-shadow: 0 0 40px #ff6600, 0 0 60px #ff4444; }
+  100% { box-shadow: 0 0 20px #ff4444; }
 }
 
 @keyframes float {
-  0% { transform: translateY(0px); }
-  100% { transform: translateY(-100px); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes burn {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.8); filter: blur(10px); }
+}
+
+@keyframes neonGlow {
+  0%, 100% { 
+    text-shadow: 0 0 10px #ff4444, 0 0 20px #ff6600, 0 0 30px #ff4444;
+  }
+  50% { 
+    text-shadow: 0 0 20px #ff6600, 0 0 30px #ff4444, 0 0 40px #ff8800;
+  }
+}
+
+@keyframes heatWave {
+  0% { transform: translateX(0) scale(1); }
+  25% { transform: translateX(2px) scale(1.01); }
+  50% { transform: translateX(-2px) scale(0.99); }
+  75% { transform: translateX(1px) scale(1.01); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes cardLift {
+  0% { transform: translateY(0) rotateX(0); }
+  100% { transform: translateY(-10px) rotateX(5deg); }
+}
+
+@keyframes burningBorder {
+  0% { border-color: rgba(255, 68, 68, 0.3); }
+  50% { border-color: rgba(255, 102, 0, 0.8); }
+  100% { border-color: rgba(255, 68, 68, 0.3); }
+}
+
+@keyframes glitchNumbers {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(-2px); }
+  20% { transform: translateX(2px); }
+  30% { transform: translateX(-1px); }
+  40% { transform: translateX(1px); }
+  50% { transform: translateX(-1px); }
+  60% { transform: translateX(1px); }
+  70% { transform: translateX(0); }
+  100% { transform: translateX(0); }
 }
 
 /* Typography */
@@ -69,7 +147,22 @@ body {
 .logo {
   font-size: 2.5rem;
   font-weight: 900;
-  text-shadow: 0 0 30px rgba(255, 68, 68, 0.5);
+  text-shadow: 0 0 30px rgba(255, 68, 68, 0.8);
+  animation: neonGlow 3s ease-in-out infinite;
+  position: relative;
+}
+
+.logo::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: radial-gradient(circle, rgba(255, 68, 68, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: fireGlow 2s ease-in-out infinite;
+  z-index: -1;
 }
 
 .artist-subtitle {
@@ -90,7 +183,21 @@ body {
   font-size: 4rem;
   font-weight: 900;
   margin-bottom: 20px;
-  text-shadow: 0 0 50px rgba(255, 68, 68, 0.3);
+  text-shadow: 0 0 50px rgba(255, 68, 68, 0.6);
+  animation: neonGlow 4s ease-in-out infinite;
+  position: relative;
+}
+
+.hero h1::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 68, 68, 0.1) 50%, transparent 70%);
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .artist-description {
@@ -139,7 +246,8 @@ body {
 .stat:hover {
   transform: translateY(-5px);
   border-color: rgba(255, 68, 68, 0.5);
-  box-shadow: 0 10px 30px rgba(255, 68, 68, 0.2);
+  box-shadow: 0 10px 30px rgba(255, 68, 68, 0.4);
+  animation: heatWave 0.6s ease-in-out;
 }
 
 .stat-number {
@@ -157,13 +265,33 @@ body {
 
 /* Countdown Timer */
 .countdown {
-  background: linear-gradient(135deg, #ff4444, #ffaa00);
+  background: linear-gradient(135deg, #ff4444, #ff6600, #ffaa00);
   padding: 30px;
   border-radius: 20px;
   margin: 40px auto;
   max-width: 600px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(255, 68, 68, 0.3);
+  box-shadow: 0 10px 30px rgba(255, 68, 68, 0.5);
+  animation: fireGlow 3s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.countdown::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: float 8s linear infinite;
+  z-index: 1;
+}
+
+.countdown > * {
+  position: relative;
+  z-index: 2;
 }
 
 .countdown h3 {
@@ -200,14 +328,35 @@ body {
 
 /* Mint Section */
 .mint-section {
-  background: rgba(20, 20, 20, 0.8);
+  background: rgba(20, 20, 20, 0.9);
   border-radius: 25px;
   padding: 40px;
   margin: 40px auto;
   max-width: 800px;
   border: 2px solid rgba(255, 68, 68, 0.3);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 68, 68, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.mint-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 68, 68, 0.1), transparent);
+  animation: float 10s linear infinite;
+  z-index: 1;
+}
+
+.mint-section > * {
+  position: relative;
+  z-index: 2;
 }
 
 .mint-header {
@@ -271,11 +420,23 @@ body {
 }
 
 .progress-bar {
-  background: linear-gradient(90deg, #ff4444, #ffaa00);
+  background: linear-gradient(90deg, #ff4444, #ff6600, #ffaa00);
   height: 20px;
   border-radius: 15px;
   transition: width 0.3s ease;
   position: relative;
+  overflow: hidden;
+}
+
+.progress-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: float 2s linear infinite;
 }
 
 .progress-text {
@@ -343,11 +504,33 @@ body {
   align-items: center;
   gap: 10px;
   margin-top: 20px;
+  animation: fireGlow 2s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.connect-wallet::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  transition: all 0.6s ease;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
 }
 
 .connect-wallet:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(255, 68, 68, 0.4);
+  box-shadow: 0 15px 35px rgba(255, 68, 68, 0.6);
+  animation: fireGlow 1s ease-in-out infinite;
+}
+
+.connect-wallet:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 .social-proof {
@@ -383,7 +566,14 @@ body {
 /* Payment Options */
 .payment-section {
   padding: 80px 20px;
-  background: rgba(20, 20, 20, 0.5);
+  background: rgba(20, 20, 20, 0.7);
+  position: relative;
+}
+
+/* Enhanced Payment Tabs */
+.payment-tabs {
+  position: relative;
+  z-index: 2;
 }
 
 .payment-tabs {
@@ -409,7 +599,9 @@ body {
 .tab-button.active,
 .tab-button:hover {
   border-color: transparent;
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(255, 68, 68, 0.4);
+  animation: fireGlow 2s ease-in-out infinite;
 }
 
 .tab-content {
@@ -418,10 +610,36 @@ body {
 }
 
 .crypto-tab, .card-tab {
-  background: rgba(30, 30, 30, 0.8);
+  background: rgba(30, 30, 30, 0.9);
   padding: 40px;
   border-radius: 20px;
   border: 2px solid rgba(255, 68, 68, 0.3);
+  backdrop-filter: blur(15px) saturate(150%);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.crypto-tab:hover, .card-tab:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 68, 68, 0.6);
+  animation: burningBorder 2s ease-in-out infinite;
+  box-shadow: 0 15px 30px rgba(255, 68, 68, 0.3);
+}
+
+.crypto-tab::before, .card-tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 68, 68, 0.1), transparent);
+  transition: all 0.6s ease;
+}
+
+.crypto-tab:hover::before, .card-tab:hover::before {
+  left: 100%;
 }
 
 .crypto-tab h3, .card-tab h3 {
@@ -513,10 +731,20 @@ body {
 }
 
 .overview-card {
-  background: rgba(30, 30, 30, 0.8);
+  background: rgba(30, 30, 30, 0.9);
   padding: 30px;
   border-radius: 20px;
   border: 2px solid rgba(255, 68, 68, 0.3);
+  backdrop-filter: blur(15px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.overview-card:hover {
+  transform: translateY(-5px) rotateX(5deg);
+  border-color: rgba(255, 68, 68, 0.6);
+  box-shadow: 0 15px 30px rgba(255, 68, 68, 0.3);
 }
 
 .overview-card h3 {
@@ -603,17 +831,40 @@ body {
 }
 
 .round-card {
-  background: rgba(20, 20, 20, 0.8);
+  background: rgba(20, 20, 20, 0.9);
   border: 1px solid rgba(255, 68, 68, 0.3);
   border-radius: 15px;
   padding: 20px;
   text-align: center;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.round-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 68, 68, 0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .round-card:hover {
   border-color: rgba(255, 68, 68, 0.5);
-  transform: translateY(-5px);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(255, 68, 68, 0.3);
+}
+
+.round-card:hover::before {
+  opacity: 1;
+}
+
+.round-number {
+  animation: glitchNumbers 3s ease-in-out infinite;
 }
 
 .round-number {
@@ -661,18 +912,40 @@ body {
 }
 
 .prize-card {
-  background: rgba(30, 30, 30, 0.8);
+  background: rgba(30, 30, 30, 0.9);
   padding: 30px;
   border-radius: 20px;
   border: 2px solid rgba(255, 170, 0, 0.3);
   text-align: center;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(15px);
+}
+
+.prize-card::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255, 170, 0, 0.2) 0%, transparent 70%);
+  transition: all 0.6s ease;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
 }
 
 .prize-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-10px) rotateY(10deg) rotateX(5deg);
   border-color: rgba(255, 170, 0, 0.6);
-  box-shadow: 0 20px 40px rgba(255, 170, 0, 0.2);
+  box-shadow: 0 25px 50px rgba(255, 170, 0, 0.3);
+  animation: cardLift 0.6s ease-in-out;
+}
+
+.prize-card:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 .prize-image {
@@ -767,14 +1040,41 @@ body {
 }
 
 /* Pulsing effect */
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7); }
-  70% { box-shadow: 0 0 0 10px rgba(255, 68, 68, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0); }
+.pulse {
+  animation: fireGlow 2s ease-in-out infinite;
 }
 
-.pulse {
-  animation: pulse 2s infinite;
+/* Enhanced Mobile Touch States */
+@media (hover: none) and (pointer: coarse) {
+  .stat:active,
+  .prize-card:active,
+  .round-card:active,
+  .overview-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+  
+  .connect-wallet:active {
+    transform: scale(0.95);
+  }
+  
+  /* Optimize particles for mobile */
+  .bg-particles::before,
+  .bg-particles::after {
+    animation-duration: 25s;
+  }
+}
+
+/* Swipe gesture indicator for payment tabs on mobile */
+@media (max-width: 768px) {
+  .payment-tabs::after {
+    content: '← Swipe →';
+    display: block;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    margin-top: 10px;
+  }
 }
 
 /* Responsive Design */

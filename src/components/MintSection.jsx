@@ -12,7 +12,7 @@ const MintSection = ({ artist }) => {
     
     // Load LaunchMyNFT script
     const script = document.createElement('script');
-    script.src = 'https://storage.googleapis.com/scriptslmt/0.1.4/solana.js';
+    script.src = 'https://storage.googleapis.com/scriptslmt/0.1.3/solana.js';
     script.type = 'module';
     script.defer = true;
     document.head.appendChild(script);
@@ -20,7 +20,7 @@ const MintSection = ({ artist }) => {
     // Load CSS
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'https://storage.googleapis.com/scriptslmt/0.1.4/solana.css';
+    link.href = 'https://storage.googleapis.com/scriptslmt/0.1.3/solana.css';
     document.head.appendChild(link);
 
     // Cleanup function
