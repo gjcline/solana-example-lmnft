@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHOPPED - Elimination Game NFT Mint</title>
+    <meta name="description" content="Enter the ultimate rapper survival competition. 45,000 tickets, 10 winners, $500K in prizes.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* Prevent flash of unstyled content */
+        #root {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        #root.loaded {
+            opacity: 1;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 68, 68, 0.3);
+            border-radius: 50%;
+            border-top-color: #ff4444;
+            animation: spin 1s ease-in-out infinite;
+            z-index: 1000;
+        }
+        
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="loading-spinner"></div>
+    </div>
+    
+    <script>
+        // Add loaded class when React app is ready
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('root').classList.add('loaded');
+            }, 100);
+        });
+        
+        // Create animated particles background
+        function createParticles() {
+            const particles = document.createElement('div');
+            particles.className = 'bg-particles';
+            particles.id = 'particles';
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '2px';
+                particle.style.height = '2px';
+                particle.style.background = Math.random() > 0.5 ? '#ff4444' : '#ffaa00';
+                particle.style.borderRadius = '50%';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animation = `float ${3 + Math.random() * 6}s ease-in-out infinite`;
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particles.appendChild(particle);
+            }
+            
+            document.body.appendChild(particles);
+        }
+        
+        // Initialize particles when DOM is ready
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
+</body>
+</html>
