@@ -4,6 +4,8 @@ const MintSection = ({ artist }) => {
   const [totalMinted, setTotalMinted] = useState(artist.fansMinted);
   const [artistMinted, setArtistMinted] = useState(artist.fansMinted);
   const [currentPrice, setCurrentPrice] = useState('0.025 SOL');
+  const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
+  const [mintedTokens, setMintedTokens] = useState(0);
 
   useEffect(() => {
     // Set window variables for LaunchMyNFT
@@ -22,6 +24,34 @@ const MintSection = ({ artist }) => {
     link.rel = 'stylesheet';
     link.href = 'https://storage.googleapis.com/scriptslmt/0.1.3/solana.css';
     document.head.appendChild(link);
+
+    // Listen for mint success events from LaunchMyNFT
+    const handleMintSuccess = (event) => {
+      console.log('Mint successful!', event);
+      setMintedTokens(event.detail?.quantity || 1);
+      setShowSuccessAnimation(true);
+      
+      // Hide animation after 5 seconds
+      setTimeout(() => {
+        setShowSuccessAnimation(false);
+      }, 5000);
+    };
+
+    // Listen for custom mint events
+    window.addEventListener('mintSuccess', handleMintSuccess);
+    window.addEventListener('launchMyNftMintSuccess', handleMintSuccess);
+
+    // Cleanup listeners
+    return () => {
+      window.removeEventListener('mintSuccess', handleMintSuccess);
+      window.removeEventListener('launchMyNftMintSuccess', handleMintSuccess);
+      
+      // Remove script and link if component unmounts
+      const existingScript = document.querySelector(`script[src="${script.src}"]`);
+      const existingLink = document.querySelector(`link[href="${link.href}"]`);
+      if (existingScript) existingScript.remove();
+      if (existingLink) existingLink.remove();
+    };
 
     // Cleanup function
     return () => {
@@ -136,6 +166,26 @@ const MintSection = ({ artist }) => {
           </p>
         </div>
       </div>
+
+      {/* Success Animation Overlay */}
+      {showSuccessAnimation && (
+        <div className="mint-success-overlay">
+          <div className="success-content">
+            <div className="fire-explosion"></div>
+            <div className="success-message">
+              <div className="success-icon">🔥</div>
+              <h2>MINTED SUCCESSFULLY!</h2>
+              <p>You've secured {mintedTokens} {artist.name} x CHOPPED ticket{mintedTokens > 1 ? 's' : ''}!</p>
+              <div className="celebration-text">Welcome to the elimination game!</div>
+            </div>
+            <div className="confetti-container">
+              {[...Array(20)].map((_, i) => (
+                <div key={i} className={`confetti confetti-${i % 4}`}></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

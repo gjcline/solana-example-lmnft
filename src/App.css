@@ -1181,4 +1181,255 @@ body {
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
 
 /* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Mint Success Animation Overlay */
+.mint-success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.success-content {
+  position: relative;
+  text-align: center;
+  z-index: 10001;
+}
+
+.fire-explosion {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  transform: translate(-50%, -50%);
+  background: 
+    radial-gradient(circle, #ff4444 0%, #ff6600 30%, #ffaa00 60%, transparent 100%),
+    radial-gradient(circle, #ff8800 20%, #ff4444 50%, transparent 80%);
+  border-radius: 50%;
+  animation: fireExplosion 1.5s ease-out;
+  z-index: -1;
+}
+
+.success-message {
+  color: white;
+  animation: successPop 0.8s ease-out 0.3s both;
+}
+
+.success-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: iconSpin 1s ease-out 0.5s both;
+}
+
+.success-message h2 {
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(45deg, #ff4444, #ffaa00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+  text-shadow: 0 0 30px rgba(255, 68, 68, 0.8);
+  animation: neonGlow 2s ease-in-out infinite;
+}
+
+.success-message p {
+  font-size: 1.5rem;
+  color: #cccccc;
+  margin-bottom: 15px;
+}
+
+.celebration-text {
+  font-size: 1.2rem;
+  color: #ffaa00;
+  font-weight: 700;
+  animation: celebrationBounce 0.6s ease-out 1s both;
+}
+
+/* Confetti Animation */
+.confetti-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #ff4444;
+  animation: confettiFall 3s linear infinite;
+}
+
+.confetti-0 {
+  background: #ff4444;
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 3s;
+}
+
+.confetti-1 {
+  background: #ff6600;
+  left: 30%;
+  animation-delay: 0.5s;
+  animation-duration: 2.5s;
+}
+
+.confetti-2 {
+  background: #ffaa00;
+  left: 50%;
+  animation-delay: 1s;
+  animation-duration: 3.5s;
+}
+
+.confetti-3 {
+  background: #ff8800;
+  left: 70%;
+  animation-delay: 1.5s;
+  animation-duration: 2.8s;
+}
+
+/* Success Animation Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fireExplosion {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes successPop {
+  0% {
+    transform: scale(0) rotateY(180deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1) rotateY(0deg);
+  }
+  100% {
+    transform: scale(1) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes iconSpin {
+  0% {
+    transform: rotateY(0deg) scale(0);
+  }
+  50% {
+    transform: rotateY(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotateY(360deg) scale(1);
+  }
+}
+
+@keyframes celebrationBounce {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Enhanced mint button states */
+.mint-controls .connect-wallet {
+  position: relative;
+  overflow: hidden;
+}
+
+.mint-controls .connect-wallet.minting {
+  animation: mintingPulse 1s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.mint-controls .connect-wallet.success {
+  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  animation: successFlash 0.5s ease-out;
+}
+
+@keyframes mintingPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 68, 68, 1), 0 0 60px rgba(255, 102, 0, 0.8);
+  }
+}
+
+@keyframes successFlash {
+  0% {
+    background: linear-gradient(135deg, #4CAF50, #8BC34A);
+    transform: scale(1);
+  }
+  50% {
+    background: linear-gradient(135deg, #66BB6A, #9CCC65);
+    transform: scale(1.05);
+  }
+  100% {
+    background: linear-gradient(135deg, #4CAF50, #8BC34A);
+    transform: scale(1);
+  }
+}
+
+/* Mobile optimizations for success animation */
+@media (max-width: 768px) {
+  .success-message h2 {
+    font-size: 2rem;
+  }
+  
+  .success-message p {
+    font-size: 1.2rem;
+  }
+  
+  .fire-explosion {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .success-icon {
+    font-size: 3rem;
+  }
+}
